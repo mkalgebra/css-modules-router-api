@@ -11,7 +11,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username === "admin" && password === "12345") {
-      navigate("/users");
+      navigate("/posts");
     } else {
       alert("Wrong data");
     }

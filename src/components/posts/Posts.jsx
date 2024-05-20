@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import SinglePost from "../singlePost/SinglePost";
 import Search from "../search/Search";
-import Pagination from "../pagination/Pagination";
+import Pag from "../pag/Pag";
+import Limit from "../limit/Limit";
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
@@ -10,7 +11,7 @@ export default function Posts() {
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
 
-  useEffect(() => getPosts(), [searchTerm, page]);
+  useEffect(() => getPosts(), [searchTerm, page, limit]);
 
   const getPosts = () => {
     fetch(
@@ -31,13 +32,16 @@ export default function Posts() {
         type="text"
         value={searchTerm}
         setValue={setSearchTerm}
+        setPage={setPage}
       />
-      <div>
+      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
         {posts.map((post) => (
           <SinglePost post={post} key={post.id} />
         ))}
       </div>
-      <Pagination total={totalPages} />
+      <Pag length={totalPages} setState={setPage} />
+      {limit}
+      <Limit setLimit={setLimit} />
     </div>
   );
 }
